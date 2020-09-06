@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2020 Jeff Epler
+# SPDX-FileCopyrightText: Copyright (c) 2020 jepler for Unpythonic Networks
+#
+# SPDX-License-Identifier: MIT
 import unittest
 import doctest
 import jepler_udecimal
