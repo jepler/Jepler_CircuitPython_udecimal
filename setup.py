@@ -53,7 +53,5 @@ setup(
     "precision math",
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    # TODO: IF LIBRARY FILES ARE A PACKAGE FOLDER,
-    #       CHANGE `py_modules=['...']` TO `packages=['...']`
-    py_modules=["jepler_udecimal"],
+    packages=["jepler_udecimal"],
 )

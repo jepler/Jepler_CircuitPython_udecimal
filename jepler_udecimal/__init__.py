@@ -46,9 +46,9 @@ The purpose of this module is to support arithmetic using familiar
 issues associated with binary floating point.  The package is especially
 useful for financial applications or for contexts where users have
 expectations that are at odds with binary floating point (for instance,
-in binary floating point, `1.00 % 0.1` gives `0.09999999999999995` instead
-of `0.0`; `Decimal('1.00') % Decimal('0.1')` returns the expected
-`Decimal('0.00')`).
+in binary floating point, ``1.00 % 0.1`` gives ``0.09999999999999995`` instead
+of ``0.0``; ``Decimal('1.00') % Decimal('0.1')`` returns the expected
+``Decimal('0.00')``).
 
 Here are some examples of using the udecimal module:
 
@@ -475,6 +475,9 @@ def localcontext(ctx=None):
     Uses a copy of the current context if no context is specified
     The returned context manager creates a local decimal context
     in a with statement:
+
+    .. code-block:: python
+
         def sin(x):
              with localcontext() as ctx:
                  ctx.prec += 2
@@ -489,21 +492,24 @@ def localcontext(ctx=None):
                  # General Decimal Arithmetic Specification
              return +s  # Convert result to normal context
 
-    >>> setcontext(DefaultContext)
-    >>> print(getcontext().prec)
-    28
-    >>> with localcontext():
-    ...     ctx = getcontext()
-    ...     ctx.prec += 2
-    ...     print(ctx.prec)
-    ...
-    30
-    >>> with localcontext(ExtendedContext):
-    ...     print(getcontext().prec)
-    ...
-    9
-    >>> print(getcontext().prec)
-    28
+
+    .. code-block:: python
+
+        >>> setcontext(DefaultContext)
+        >>> print(getcontext().prec)
+        28
+        >>> with localcontext():
+        ...     ctx = getcontext()
+        ...     ctx.prec += 2
+        ...     print(ctx.prec)
+        ...
+        30
+        >>> with localcontext(ExtendedContext):
+        ...     print(getcontext().prec)
+        ...
+        9
+        >>> print(getcontext().prec)
+        28
     """
     if ctx is None:
         ctx = getcontext()
@@ -689,8 +695,9 @@ class Decimal(object):
         Note that Decimal.from_float(0.1) is not the same as Decimal('0.1').
         Since 0.1 is not exactly representable in binary floating point, the
         value is stored as the nearest representable value which is
-        0x1.999999999999ap-4.  The exact equivalent of the value in decimal
-        is 0.1000000000000000055511151231257827021181583404541015625.
+        0x1.999999999999ap-4.  The exact equivalent of the value in decimal is
+        0.1000000000000000055511151231257827021181583404541015625 on desktop
+        Python.  On CircuitPython, the value has fewer significant figures.
 
         >>> Decimal.from_float(0.1)
         Decimal('0.1000000000000000055511151231257827021181583404541015625')
@@ -2115,28 +2122,7 @@ class Decimal(object):
         return _dec_from_triple(0, str_xc + "0" * zeros, xe - zeros)
 
     def __pow__(self, other, *, context=None):
-        """Return self ** other [ % modulo].
-
-        With two arguments, compute self**other.
-
-        With three arguments, compute (self**other) % modulo.  For the
-        three argument form, the following restrictions on the
-        arguments hold:
-
-         - all three arguments must be integral
-         - other must be nonnegative
-         - either self or other (or both) must be nonzero
-         - modulo must be nonzero and must have at most p digits,
-           where p is the context precision.
-
-        If any of these restrictions is violated the InvalidOperation
-        flag is raised.
-
-        The result of pow(self, other, modulo) is identical to the
-        result that would be obtained by computing (self**other) %
-        modulo with unbounded precision, but is computed more
-        efficiently.  It is always exact.
-        """
+        """Return self ** other."""
 
         other = _convert_other(other)
         if other is NotImplemented:
@@ -3396,20 +3382,16 @@ class _ContextManager(object):
 class Context(object):
     """Contains the context for a Decimal instance.
 
-    Contains:
-    prec - precision (for use in rounding, division, square roots..)
-    rounding - rounding type (how you round)
-    traps - If traps[exception] = 1, then the exception is
-                    raised when it is caused.  Otherwise, a value is
-                    substituted in.
-    flags  - When an exception is caused, flags[exception] is set.
-             (Whether or not the trap_enabler is set)
-             Should be reset by user of Decimal instance.
-    Emin -   Minimum exponent
-    Emax -   Maximum exponent
-    capitals -      If 1, 1*10^1 is printed as 1E+1.
-                    If 0, printed as 1e1
-    clamp -  If 1, change exponents if too high (Default 0)
+    :param int prec: precision (for use in rounding, division, square roots..)
+    :param str rounding: rounding type (how you round)
+    :param dict traps: if traps[exception] = 1, then the exception is
+                       raised when it is caused.  Otherwise, a value is
+                       substituted in.
+    :param dict flags: when an exception is caused, flags[exception] is set.  (Whether or not the trap_enabler is set) Should be reset by user of Decimal instance.
+    :param int Emin: minimum exponent
+    :param int Emax: maximum exponent
+    :param bool capitals: if true, 1*10^1 is printed as 1E+1, else printed as 1e1
+    :param bool clamp: If true, change exponents if too high
     """
 
     def __init__(
