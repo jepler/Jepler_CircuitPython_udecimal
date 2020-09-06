@@ -11,6 +11,8 @@
 #
 # The algorithms use range reductions and taylor polynomaials
 
+# pylint: disable=invalid-name
+
 """
 Trig functions using jepler_udecimal
 
@@ -46,9 +48,10 @@ Decimal('0.5646424733950353572009454457')
 
 from . import Decimal, localcontext
 
-__all__ = ['atan', 'sin', 'cos']
+__all__ = ["atan", "sin", "cos"]
 
-_point2 = Decimal('.2')
+_point2 = Decimal(".2")
+
 
 def atan(x, context=None):
     """Compute the arctangent of the specified value, in radians"""
@@ -63,19 +66,29 @@ def atan(x, context=None):
             n = -1
             x = -x
 
-        # Hard code values for inputs +-1 and +-.2 
+        # Hard code values for inputs +-1 and +-.2
         if scale < 65:
             if x == 1:
-                return Decimal('.7853981633974483096156608458198757210492923498437764552437361480') / n
+                return (
+                    Decimal(
+                        ".7853981633974483096156608458198757210492923498437764552437361480"
+                    )
+                    / n
+                )
             if x == _point2:
-                return Decimal('.1973955598498807583700497651947902934475851037878521015176889402') / n
+                return (
+                    Decimal(
+                        ".1973955598498807583700497651947902934475851037878521015176889402"
+                    )
+                    / n
+                )
 
         if x > _point2:
             ctx.prec += 5
-            a=atan(_point2)
+            a = atan(_point2)
         else:
-            a=0
-    
+            a = 0
+
         ctx.prec = scale + 3
 
         # This very efficient range reduction reduces 1e300 to under .2 in
@@ -83,7 +96,7 @@ def atan(x, context=None):
         m = 0
         while x > _point2:
             m += 1
-            x = (x-_point2)/(1+_point2*x)
+            x = (x - _point2) / (1 + _point2 * x)
 
         r = u = x
         f = -x * x
@@ -92,12 +105,13 @@ def atan(x, context=None):
 
         while t.logb() > -ctx.prec:
             u *= f
-            t = u/i
+            t = u / i
             i += 2
             r += t
 
-        r += m*a
-    return r/n
+        r += m * a
+    return r / n
+
 
 def sin(x, context=None):
     """Compute the sine of the specified value, in radians"""
@@ -110,23 +124,23 @@ def sin(x, context=None):
 
         scale = ctx.prec
 
-        ctx.prec = int(1.1*scale+2)
+        ctx.prec = int(1.1 * scale + 2)
         a = atan(1)
-        q = (x//a + 2)//4
-        x -= 4*q*a
+        q = (x // a + 2) // 4
+        x -= 4 * q * a
         if q % 2:
             x = -x
-        ctx.prec = scale+2
+        ctx.prec = scale + 2
         r = a = x
-        q = -x*x
-        i=3
-        lim = Decimal(f"10e-{ctx.prec}")
+        q = -x * x
+        i = 3
         while a.logb() > -ctx.prec:
-            a *= q/(i*(i-1))
+            a *= q / (i * (i - 1))
             r += a
             i += 2
-        
-    return r/1
+
+    return r / 1
+
 
 def cos(x, context=None):
     """Compute the cosine of the specified value, in radians"""
@@ -135,9 +149,10 @@ def cos(x, context=None):
 
     with localcontext(context) as ctx:
         scale = ctx.prec
-        ctx.prec = int(scale*1.2)
-        r = sin(2*atan(1)+x)
-    return r/1
+        ctx.prec = int(scale * 1.2)
+        r = sin(2 * atan(1) + x)
+    return r / 1
+
 
 def tan(x, context=None):
     """Compute the tangent of the specified value, in radians"""
@@ -145,11 +160,11 @@ def tan(x, context=None):
         x = Decimal(x)
 
     with localcontext(context) as ctx:
-        scale = ctx.prec
         ctx.prec += 2
         s = sin(x)
-        r = s / (1-s*s).sqrt()
-    return r/1
+        r = s / (1 - s * s).sqrt()
+    return r / 1
+
 
 def asin(x, context=None):
     """Compute the arcsine of the specified value, in radians"""
@@ -157,10 +172,10 @@ def asin(x, context=None):
         x = Decimal(x)
 
     with localcontext(context) as ctx:
-        scale = ctx.prec
         ctx.prec += 2
-        r = atan(x / (1 - x*x).sqrt())
-    return r/1
+        r = atan(x / (1 - x * x).sqrt())
+    return r / 1
+
 
 def acos(x, context=None):
     """Compute the arccosine of the specified value, in radians"""
@@ -168,12 +183,12 @@ def acos(x, context=None):
         x = Decimal(x)
 
     with localcontext(context) as ctx:
-        scale = ctx.prec
         ctx.prec += 2
-        r = atan((1-x*x).sqrt()/x)
+        r = atan((1 - x * x).sqrt() / x)
         if r < 0:
-            r += 4*atan(1)
+            r += 4 * atan(1)
         return r
+
 
 Decimal.tan = tan
 Decimal.sin = sin
