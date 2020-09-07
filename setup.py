@@ -31,6 +31,12 @@ setup(
     long_description_content_type="text/x-rst",
     # The project's main homepage.
     url="https://github.com/jepler/Jepler_CircuitPython_udecimal",
+    project_urls = {
+        'Source': 'https://github.com/jepler/Jepler_CircuitPython_udecimal',
+        'Documentation': 'https://jepler-udecimal.readthedocs.io/en/latest/api/jepler_udecimal/index.html',
+        'Tracker': 'https://github.com/jepler/Jepler_CircuitPython_udecimal/issues',
+        'Pull Requests': 'https://github.com/jepler/Jepler_CircuitPython_udecimal/pulls',
+    }
     # Author details
     author="Jeff Epler",
     author_email="jepler@gmail.com",
