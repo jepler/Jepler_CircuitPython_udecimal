@@ -190,12 +190,5 @@ def acos(x, context=None):
         return r
 
 
-# pylint: disable=using-constant-test
-# This stops a doc-building error in autoapi
-if 1:
-    Decimal.tan = tan
-    Decimal.sin = sin
-    Decimal.cos = cos
-    Decimal.atan = atan
-    Decimal.asin = asin
-    Decimal.acos = acos
+for name in __all__:
+    setattr(Decimal, name, globals()[name])
