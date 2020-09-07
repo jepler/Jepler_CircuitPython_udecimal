@@ -15,9 +15,6 @@
 # pylint: disable=line-too-long,superfluous-parens,too-many-lines,redefined-builtin,bare-except
 # pylint: disable=protected-access,invalid-name,no-self-use,self-cls-assignment,no-else-return,no-else-raise,too-many-public-methods,useless-object-inheritance,invalid-unary-operand-type,unused-argument,too-many-branches,too-many-return-statements,no-else-break,unused-variable,arguments-differ,missing-function-docstring,inconsistent-return-statements,global-statement,too-many-statements,attribute-defined-outside-init,consider-using-in,dangerous-default-value,using-constant-test,too-many-locals,too-many-arguments,keyword-arg-before-vararg
 """
-`jepler_udecimal`
-================================================================================
-
 Reduced version of the decimal library for CircuitPython.  It runs on
 CircuitPython as well as standard Python, though you should probably
 use the built in decimal module on standard Python.
