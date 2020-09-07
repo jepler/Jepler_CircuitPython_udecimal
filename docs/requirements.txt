@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
+# SPDX-FileCopyrightText: Copyright (c) 2020 jepler for Unpythonic Networks
+#
+# SPDX-License-Identifier: MIT
 sphinx<4
 recommonmark==0.6.0
 sphinxcontrib-svg2pdfconverter==0.1.0
