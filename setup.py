@@ -42,11 +42,13 @@ setup(
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries",
-        "Topic :: System :: Hardware",
         "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Python Software Foundation License ",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
     # What does your project relate to?
     keywords="adafruit blinka circuitpython micropython udecimal numeric helper "
