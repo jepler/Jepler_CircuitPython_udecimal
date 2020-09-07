@@ -32,24 +32,18 @@ This is easily achieved by downloading
 
 Installing from PyPI
 =====================
-.. note:: This library is not available on PyPI yet. Install documentation is included
-   as a standard element. Stay tuned for PyPI availability!
 
-.. Remove the above note if PyPI version is/will be available at time of release.
-   If the library is not planned for PyPI, remove the entire 'Installing from PyPI' section.
-
-On supported GNU/Linux systems like the Raspberry Pi, you can install the driver locally `from
-PyPI <https://pypi.org/project/jepler-circuitpython-udecimal/>`_. To install for current user:
+To install for current user:
 
 .. code-block:: shell
 
-    pip3 install jepler-circuitpython-udecimal
+    python3 -mpip install --user jepler-circuitpython-udecimal
 
 To install system-wide (this may be required in some cases):
 
 .. code-block:: shell
 
-    sudo pip3 install jepler-circuitpython-udecimal
+    sudo python3 -mpip install jepler-circuitpython-udecimal
 
 To install in a virtual environment in your current project:
 
