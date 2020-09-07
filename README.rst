@@ -1,8 +1,8 @@
 Introduction
 ============
 
-.. image:: https://readthedocs.org/projects/jepler-circuitpython-udecimal/badge/?version=latest
-    :target: https://circuitpython.readthedocs.io/projects/udecimal/en/latest/
+.. image:: https://readthedocs.org/projects/jepler-udecimal/badge/?version=latest
+    :target: https://jepler-udecimal.readthedocs.io/en/latest/
     :alt: Documentation Status
 
 .. image:: https://img.shields.io/discord/327254708534116352.svg
