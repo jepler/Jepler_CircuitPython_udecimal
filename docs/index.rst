@@ -8,15 +8,13 @@ Table of Contents
     :hidden:
 
     self
+    api/index.rst
 
 .. toctree::
     :caption: API Reference
-    :maxdepth: 3
+    :maxdepth: 4
 
-    api
-
-.. toctree::
-    :caption: Tutorials
+    api/jepler_udecimal/index.rst
 
 .. toctree::
     :caption: Other Links

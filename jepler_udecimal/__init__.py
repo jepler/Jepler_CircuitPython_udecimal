@@ -22,6 +22,9 @@ Reduced version of the decimal library for CircuitPython.  It runs on
 CircuitPython as well as standard Python, though you should probably
 use the built in decimal module on standard Python.
 
+It still requires a fairly beefy mcu to run.  Importing jepler_udecimal
+on an nRF52840 uses about 52kB of heap.
+
 * Author(s): jepler
 
 Implementation Notes
@@ -37,9 +40,9 @@ https://git.yzena.com/gavin/bc/src/branch/master/gen/lib.bc
   https://github.com/adafruit/circuitpython/releases
 
 This is an implementation of decimal floating point arithmetic based on
-the [General Decimal Arithmetic Specification](http://speleotrove.com/decimal/decarith.html) and [IEEE standard 854-1987](http://en.wikipedia.org/wiki/IEEE_854-1987).
+the `General Decimal Arithmetic Specification <http://speleotrove.com/decimal/decarith.html>`_ and `IEEE standard 854-1987 <http://en.wikipedia.org/wiki/IEEE_854-1987>`_.
 
-Decimal floating point has finite precision with arbitrarily large bounds.
+`Decimal` floating point has finite precision with arbitrarily large bounds.
 
 The purpose of this module is to support arithmetic using familiar
 "schoolhouse" rules and to avoid some of the tricky representation
@@ -943,10 +946,12 @@ class Decimal(object):
     def compare(self, other, context=None):
         """Compare self to other.  Return a decimal value:
 
+        =============== === ==============
         a or b is a NaN ==> Decimal('NaN')
         a < b           ==> Decimal('-1')
         a == b          ==> Decimal('0')
         a > b           ==> Decimal('1')
+        =============== === ==============
         """
         other = _convert_other(other, raiseit=True)
 
@@ -3272,16 +3277,17 @@ class Decimal(object):
         """Returns an indication of the class of self.
 
         The class is one of the following strings:
-          sNaN
-          NaN
-          -Infinity
-          -Normal
-          -Subnormal
-          -Zero
-          +Zero
-          +Subnormal
-          +Normal
-          +Infinity
+
+        * sNaN
+        * NaN
+        * -Infinity
+        * -Normal
+        * -Subnormal
+        * -Zero
+        * +Zero
+        * +Subnormal
+        * +Normal
+        * +Infinity
         """
         if self.is_snan():
             return "sNaN"
@@ -4531,16 +4537,17 @@ class Context(object):
         """Returns an indication of the class of the operand.
 
         The class is one of the following strings:
-          -sNaN
-          -NaN
-          -Infinity
-          -Normal
-          -Subnormal
-          -Zero
-          +Zero
-          +Subnormal
-          +Normal
-          +Infinity
+
+        * -sNaN
+        * -NaN
+        * -Infinity
+        * -Normal
+        * -Subnormal
+        * -Zero
+        * +Zero
+        * +Subnormal
+        * +Normal
+        * +Infinity
 
         >>> c = ExtendedContext.copy()
         >>> c.Emin = -999
@@ -4595,26 +4602,11 @@ class Context(object):
         return a.__pos__(context=self)
 
     def power(self, a, b):
-        """Raises a to the power of b, to modulo if given.
+        """Raises a to the power of b
 
-        With two arguments, compute a**b.  If a is negative then b
-        must be integral.  The result will be inexact unless b is
-        integral and the result is finite and can be expressed exactly
-        in 'precision' digits.
-
-        With three arguments, compute (a**b) % modulo.  For the
-        three argument form, the following restrictions on the
-        arguments hold:
-
-         - all three arguments must be integral
-         - b must be nonnegative
-         - at least one of a or b must be nonzero
-         - modulo must be nonzero and have at most 'precision' digits
-
-        The result of pow(a, b, modulo) is identical to the result
-        that would be obtained by computing (a**b) % modulo with
-        unbounded precision, but is computed more efficiently.  It is
-        always exact.
+        If a is negative then b must be integral.  The result will be inexact
+        unless b is integral and the result is finite and can be expressed
+        exactly in 'precision' digits.
 
         >>> c = ExtendedContext.copy()
         >>> c.Emin = -999

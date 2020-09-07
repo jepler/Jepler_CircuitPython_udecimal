@@ -16,7 +16,7 @@
 """
 Trig functions using jepler_udecimal
 
-Importing this module adds the relevant methods to the Decimal object.
+Importing this module adds the relevant methods to the `Decimal` object.
 
 Generally speaking, these routines increase the precision by some amount,
 perform argument range reduction followed by evaluation of a taylor polynomial,
@@ -48,7 +48,7 @@ Decimal('0.5646424733950353572009454457')
 
 from . import Decimal, localcontext
 
-__all__ = ["atan", "sin", "cos"]
+__all__ = ["acos", "asin", "atan", "cos", "sin", "tan"]
 
 _point2 = Decimal(".2")
 
@@ -190,9 +190,12 @@ def acos(x, context=None):
         return r
 
 
-Decimal.tan = tan
-Decimal.sin = sin
-Decimal.cos = cos
-Decimal.atan = atan
-Decimal.asin = asin
-Decimal.acos = acos
+# pylint: disable=using-constant-test
+# This stops a doc-building error in autoapi
+if 1:
+    Decimal.tan = tan
+    Decimal.sin = sin
+    Decimal.cos = cos
+    Decimal.atan = atan
+    Decimal.asin = asin
+    Decimal.acos = acos

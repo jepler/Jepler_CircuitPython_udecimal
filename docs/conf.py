@@ -15,18 +15,26 @@ sys.path.insert(0, os.path.abspath(".."))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx.ext.autodoc",
+    "autoapi.extension",
     "sphinx.ext.intersphinx",
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
 ]
 
-# TODO: Please Read!
-# Uncomment the below if you use native CircuitPython modules such as
-# digitalio, micropython and busio. List the modules you use. Without it, the
-# autodoc module docs will fail to generate with a warning.
-# autodoc_mock_imports = ["digitalio", "busio"]
-
+autoapi_keep_files = True
+autoapi_dirs = ["../jepler_udecimal"]
+autoapi_add_toctree_entry = True
+autoapi_options = [
+    "members",
+    "undoc-members",
+    "show-inheritance",
+    "special-members",
+    "show-module-summary",
+]
+autoapi_python_class_content = "both"
+autoapi_python_use_implicit_namespaces = True
+autoapi_template_dir = "autoapi/templates"
+autoapi_root = "api"
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3.4", None),
@@ -71,6 +79,7 @@ exclude_patterns = [
     ".DS_Store",
     ".env",
     "CODE_OF_CONDUCT.md",
+    "autoapi",
 ]
 
 # The reST default role (used for this markup: `text`) to use for all
