@@ -5298,16 +5298,13 @@ def _convert_for_comparison(self, other, equality_op=False):
     if isinstance(other, Decimal):
         return self, other
 
-    # Comparison with a Rational instance (also includes integers):
-    # self op n/d <=> self*d op n (for n and d integers, d positive).
-    # A NaN or infinity can be left unchanged without affecting the
-    # comparison result.
+    # Comparison with an integer (we don't have rationals)
     if isinstance(other, int):
         if not self._is_special:
             self = _dec_from_triple(
-                self._sign, str(_int(self._int) * other.denominator), self._exp
+                self._sign, str(_int(self._int)), self._exp
             )
-        return self, Decimal(other.numerator)
+        return self, Decimal(other)
 
     # Comparisons with float types.  == and != comparisons
     # with complex numbers should succeed, returning either True or False
