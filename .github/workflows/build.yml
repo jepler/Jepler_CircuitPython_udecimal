@@ -54,8 +54,26 @@ jobs:
       run: |
         pylint $( find . -path './jepler*.py' )
         ([[ ! -d "examples" ]] || pylint --disable=missing-docstring,invalid-name,bad-whitespace $( find . -path "./examples/*.py" ))
+    - name: Clone and build circuitpython unix port
+      run: |
+        set -e
+        [ -e circuitpython/py/py.mk ] || git clone --depth=1 https://github.com/adafruit/circuitpython
+        [ -e circuitpython/lib/libffi/autogen.sh ] || (cd circuitpython && git submodule update --init lib/libffi lib/axtls lib/berkeley-db-1.xx tools/huffman lib/uzlib extmod/ulab)
+        [ -x circuitpython/ports/unix/micropython ] || (
+            make -C circuitpython/mpy-cross -j$(nproc)
+            make -C circuitpython/ports/unix -j$(nproc) deplibs
+            make -C circuitpython/ports/unix -j$(nproc) DEBUG=1 STRIP=:
+        )
     - name: Unit Test
-      run: python -m jepler_udecimal.test
+      run: |
+        python -m jepler_udecimal.test
+        if ! env MICROPYPATH=. PYTHONPATH=. MICROPY_MICROPYTHON=circuitpython/ports/unix/micropython circuitpython/tests/run-tests -d examples; then
+            for exp in *.exp; do
+                testbase=$(basename $exp .exp);
+                echo -e "\nFAILURE $testbase";
+                diff -u $testbase.exp $testbase.out;
+            done
+        fi
     - name: Build assets
       run: circuitpython-build-bundles --package_folder_prefix jepler --filename_prefix ${{ steps.repo-name.outputs.repo-name }} --library_location .
     - name: Build docs
