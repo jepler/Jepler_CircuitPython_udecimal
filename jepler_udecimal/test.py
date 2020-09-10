@@ -2,6 +2,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2020 jepler for Unpythonic Networks
 #
 # SPDX-License-Identifier: MIT
+
+# pylint: disable=missing-module-docstring,missing-function-docstring,unused-argument
 import unittest
 import doctest
 import jepler_udecimal
