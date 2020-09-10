@@ -171,7 +171,7 @@ if sys.implementation.name == "circuitpython":
 
 
 else:
-    as_integer_ratio = float.as_integer_ratio
+    _as_integer_ratio = float.as_integer_ratio
 
 # Errors
 
