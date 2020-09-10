@@ -57,7 +57,7 @@ jobs:
     - name: Unit Test
       run: python -m jepler_udecimal.test
     - name: Build assets
-      run: circuitpython-build-bundles --filename_prefix ${{ steps.repo-name.outputs.repo-name }} --library_location .
+      run: circuitpython-build-bundles --package_folder_prefix jepler --filename_prefix ${{ steps.repo-name.outputs.repo-name }} --library_location .
     - name: Build docs
       working-directory: docs
       run: sphinx-build -E -W -b html . _build/html
