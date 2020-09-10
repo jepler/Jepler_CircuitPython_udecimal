@@ -160,7 +160,7 @@ except NameError:
 
 if sys.implementation.name == "circuitpython":
 
-    def as_integer_ratio(f):
+    def _as_integer_ratio(f):
         m, e = _math.frexp(f)
         m = round(m * (1 << 53))
         e = e - 53
@@ -737,7 +737,7 @@ class Decimal(object):
                 sign = 0
             else:
                 sign = 1
-            n, d = as_integer_ratio(abs(f))
+            n, d = _as_integer_ratio(abs(f))
             k = d.bit_length() - 1
             coeff = str(n * 5 ** k)
         else:
