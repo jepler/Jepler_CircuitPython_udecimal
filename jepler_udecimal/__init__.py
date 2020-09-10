@@ -158,6 +158,21 @@ try:
 except NameError:
     NotImplemented = object()
 
+if sys.implementation.name == "circuitpython":
+
+    def as_integer_ratio(f):
+        m, e = _math.frexp(f)
+        m = round(m * (1 << 53))
+        e = e - 53
+        if e > 0:
+            return m * (1 << e), 1
+        else:
+            return m, (1 << (-e))
+
+
+else:
+    as_integer_ratio = float.as_integer_ratio
+
 # Errors
 
 
@@ -722,7 +737,7 @@ class Decimal(object):
                 sign = 0
             else:
                 sign = 1
-            n, d = abs(f).as_integer_ratio()
+            n, d = as_integer_ratio(abs(f))
             k = d.bit_length() - 1
             coeff = str(n * 5 ** k)
         else:
