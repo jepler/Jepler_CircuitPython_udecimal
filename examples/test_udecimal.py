@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2020 Jeff Epler <https://unpythonic.net>
 #
 # SPDX-License-Identifier: Unlicense
-# pylint: disable=redefined-builtin,wildcard-import,wrong-import-position,unused-wildcard-import,unused-import,broad-except
+# pylint: disable=redefined-builtin,wildcard-import,wrong-import-position,unused-wildcard-import,unused-import,broad-except,undefined-variable
 from jepler_udecimal import *
 
 setcontext(ExtendedContext)
