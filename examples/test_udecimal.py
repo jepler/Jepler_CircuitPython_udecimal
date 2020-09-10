@@ -1,12 +1,16 @@
+# SPDX-FileCopyrightText: 2020 Jeff Epler <https://unpythonic.net>
+#
+# SPDX-License-Identifier: Unlicense
 from jepler_udecimal import *
+
 setcontext(ExtendedContext)
 print(Decimal(0))
-print(Decimal('1'))
-print(Decimal('-.0123'))
+print(Decimal("1"))
+print(Decimal("-.0123"))
 print(Decimal(123456))
-print(Decimal('123.45e12345678'))
-print(Decimal('1.33') + Decimal('1.27'))
-print(Decimal('12.34') + Decimal('3.87') - Decimal('18.41'))
+print(Decimal("123.45e12345678"))
+print(Decimal("1.33") + Decimal("1.27"))
+print(Decimal("12.34") + Decimal("3.87") - Decimal("18.41"))
 dig = Decimal(1)
 print(dig / Decimal(3))
 getcontext().prec = 18
@@ -52,9 +56,10 @@ except Exception as e:
 print(c.flags[InvalidOperation])
 import jepler_udecimal.utrig
 from jepler_udecimal import Decimal
-print(Decimal('.7').atan())
-print(Decimal('.1').acos())
-print(Decimal('-.1').asin())
-print(Decimal('.4').tan())
-print(Decimal('.5').cos())
-print(Decimal('.6').sin())
+
+print(Decimal(".7").atan())
+print(Decimal(".1").acos())
+print(Decimal("-.1").asin())
+print(Decimal(".4").tan())
+print(Decimal(".5").cos())
+print(Decimal(".6").sin())

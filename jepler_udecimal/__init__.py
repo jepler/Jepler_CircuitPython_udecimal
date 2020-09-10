@@ -5301,9 +5301,7 @@ def _convert_for_comparison(self, other, equality_op=False):
     # Comparison with an integer (we don't have rationals)
     if isinstance(other, int):
         if not self._is_special:
-            self = _dec_from_triple(
-                self._sign, str(_int(self._int)), self._exp
-            )
+            self = _dec_from_triple(self._sign, str(_int(self._int)), self._exp)
         return self, Decimal(other)
 
     # Comparisons with float types.  == and != comparisons
