@@ -103,7 +103,7 @@ def atan(x, context=None):
         t = Decimal(1)
         i = 3
 
-        while t.logb() > -ctx.prec:
+        while t and t.logb() > -ctx.prec:
             u *= f
             t = u / i
             i += 2
@@ -134,7 +134,7 @@ def sin(x, context=None):
         r = a = x
         q = -x * x
         i = 3
-        while a.logb() > -ctx.prec:
+        while a and a.logb() > -ctx.prec:
             a *= q / (i * (i - 1))
             r += a
             i += 2
