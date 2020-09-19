@@ -18,3 +18,5 @@ dist
 .vscode
 docs/api
 circuitpython
+/*.exp
+/*.out
