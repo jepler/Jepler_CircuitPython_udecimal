@@ -19,7 +19,7 @@ if [ -d examples ]; then
 fi
 
 echo "=== Clone and build circuitpython unix port"
-[ -e circuitpython/py/py.mk ] || git clone --depth=1 https://github.com/adafruit/circuitpython
+[ -e circuitpython/py/py.mk ] || git clone --branch=6.0.0-alpha.3 --depth=1 https://github.com/adafruit/circuitpython
 [ -e circuitpython/lib/libffi/autogen.sh ] || (cd circuitpython && git submodule update --init lib/libffi lib/axtls lib/berkeley-db-1.xx tools/huffman lib/uzlib extmod/ulab)
 [ -x circuitpython/ports/unix/micropython ] || (
 make -C circuitpython/mpy-cross -j$(nproc)
