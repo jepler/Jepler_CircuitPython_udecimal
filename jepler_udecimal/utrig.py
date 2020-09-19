@@ -11,7 +11,7 @@
 #
 # The algorithms use range reductions and taylor polynomaials
 
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name,protected-access
 
 """
 Trig functions using jepler_udecimal
@@ -46,7 +46,7 @@ Decimal('0.5646424733950353572009454457')
 
 """
 
-from . import Decimal, localcontext
+from . import Decimal, localcontext, getcontext, InvalidOperation
 
 __all__ = ["acos", "asin", "atan", "cos", "sin", "tan"]
 
@@ -57,6 +57,10 @@ def atan(x, context=None):
     """Compute the arctangent of the specified value, in radians"""
     if not isinstance(x, Decimal):
         x = Decimal(x)
+
+    ans = x._check_nans(context=context)
+    if ans:
+        return ans
 
     with localcontext(context) as ctx:
         scale = ctx.prec
@@ -118,6 +122,10 @@ def sin(x, context=None):
     if not isinstance(x, Decimal):
         x = Decimal(x)
 
+    ans = x._check_nans(context=context)
+    if ans:
+        return ans
+
     with localcontext(context) as ctx:
         if x < 0:
             return -sin(-x)
@@ -147,6 +155,10 @@ def cos(x, context=None):
     if not isinstance(x, Decimal):
         x = Decimal(x)
 
+    ans = x._check_nans(context=context)
+    if ans:
+        return ans
+
     with localcontext(context) as ctx:
         scale = ctx.prec
         ctx.prec = int(scale * 1.2)
@@ -158,6 +170,10 @@ def tan(x, context=None):
     """Compute the tangent of the specified value, in radians"""
     if not isinstance(x, Decimal):
         x = Decimal(x)
+
+    ans = x._check_nans(context=context)
+    if ans:
+        return ans
 
     with localcontext(context) as ctx:
         ctx.prec += 2
@@ -171,6 +187,15 @@ def asin(x, context=None):
     if not isinstance(x, Decimal):
         x = Decimal(x)
 
+    ans = x._check_nans(context=context)
+    if ans:
+        return ans
+
+    context = context or getcontext()
+
+    if x.compare_total_mag(Decimal(1)) > 0:
+        return context._raise_error(InvalidOperation, "asin(x), |x| > 1")
+
     with localcontext(context) as ctx:
         ctx.prec += 2
         r = atan(x / (1 - x * x).sqrt())
@@ -181,6 +206,15 @@ def acos(x, context=None):
     """Compute the arccosine of the specified value, in radians"""
     if not isinstance(x, Decimal):
         x = Decimal(x)
+
+    ans = x._check_nans(context=context)
+    if ans:
+        return ans
+
+    context = context or getcontext()
+
+    if x.compare_total_mag(Decimal(1)) > 0:
+        return context._raise_error(InvalidOperation, "acos(x), |x| > 1")
 
     with localcontext(context) as ctx:
         ctx.prec += 2
