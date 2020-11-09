@@ -160,6 +160,11 @@ except NameError:
 
 if sys.implementation.name == "circuitpython":
 
+    if not hasattr(int, "bit_length"):
+        raise ImportError(
+            "jepler_udecimal requires int.bit_length.  Use CircuitPython 6.0.0-rc.1 or newer."
+        )
+
     def _as_integer_ratio(f):
         m, e = _math.frexp(f)
         m = round(m * (1 << 53))
