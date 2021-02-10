@@ -26,9 +26,6 @@ This library depends on:
 
 * `Adafruit CircuitPython <https://github.com/adafruit/circuitpython>`_
 
-Note that some CircuitPython core changes were needed to support udecimal.
-Please use CircuitPython 6.0.0-rc.1 or newer with udecimal.
-
 The library also runs on desktop Python3, and should give numerically identical
 results across all platorms.
 
