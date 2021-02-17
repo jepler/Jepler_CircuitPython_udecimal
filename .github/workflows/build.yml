@@ -42,14 +42,11 @@ jobs:
       # (e.g. - apt-get: gettext, etc; pip: circuitpython-build-tools, requirements.txt; etc.)
       run: |
         source actions-ci/install.sh
-    - name: Pip install Sphinx, pre-commit
+    - name: Pip install Sphinx
       run: |
-        pip install --force-reinstall Sphinx sphinx-rtd-theme sphinx-autoapi pre-commit
+        pip install --force-reinstall Sphinx sphinx-rtd-theme sphinx-autoapi
     - name: Library version
       run: git describe --dirty --always --tags
-    - name: Pre-commit hooks
-      run: |
-        pre-commit run --all-files
     - name: Clone and build circuitpython unix port
       run: |
         set -e
