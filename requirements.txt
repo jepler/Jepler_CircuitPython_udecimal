@@ -2,18 +2,3 @@
 # SPDX-FileCopyrightText: Copyright (c) 2020 jepler for Unpythonic Networks
 #
 # SPDX-License-Identifier: MIT
-astroid
-black
-isort
-pre-commit
-recommonmark==0.6.0
-sphinx<4
-sphinx-autoapi
-sphinxcontrib-svg2pdfconverter==0.1.0
-sphinx-rtd-theme
-setuptools
-wheel
-twine
-readme_renderer
-testresources
-circuitpython-build-tools
