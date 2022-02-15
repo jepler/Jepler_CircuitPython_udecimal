@@ -34,7 +34,7 @@ Here are some examples of using utrig:
 >>> Decimal('.7').atan()
 Decimal('0.6107259643892086165437588765')
 >>> Decimal('.1').acos()
-Decimal('1.47062890563333682288579851219')
+Decimal('1.470628905633336822885798512')
 >>> Decimal('-.1').asin()
 Decimal('-0.1001674211615597963455231795')
 >>> Decimal('.4').tan()
@@ -43,6 +43,11 @@ Decimal('0.4227932187381617619816354272')
 Decimal('0.8775825618903727161162815826')
 >>> Decimal('.6').sin()
 Decimal('0.5646424733950353572009454457')
+>>> Decimal('1').asin()
+Decimal('1.570796326794896619231321692')
+>>> Decimal('-1').acos()
+Decimal('3.141592653589793238462643383')
+
 
 """
 
@@ -198,7 +203,12 @@ def asin(x, context=None):
 
     with localcontext(context) as ctx:
         ctx.prec += 2
-        r = atan(x / (1 - x * x).sqrt())
+        if x == 1:
+            r = atan(Decimal(1)) * 2  # pi * 1/2 radians
+        elif x == -1:
+            r = atan(Decimal(1)) * -2  # pi * -1/2 radians
+        else:
+            r = atan(x / (1 - x * x).sqrt())
     return r / 1
 
 
@@ -218,10 +228,15 @@ def acos(x, context=None):
 
     with localcontext(context) as ctx:
         ctx.prec += 2
-        r = atan((1 - x * x).sqrt() / x)
+        if x == 1:
+            r = Decimal(0)  # 0 radians
+        elif x == -1:
+            r = atan(Decimal(1)) * 4  # pi radians
+        else:
+            r = atan((1 - x * x).sqrt() / x)
         if r < 0:
             r += 4 * atan(1)
-        return r
+    return r / 1
 
 
 for name in __all__:
