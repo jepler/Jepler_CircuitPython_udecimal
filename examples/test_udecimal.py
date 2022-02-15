@@ -103,3 +103,9 @@ try:
 except Exception as e:
     print("exception")
 print(Decimal("2").atan())
+print(Decimal("1").asin())
+print(Decimal("-1").asin())
+print(Decimal(".5").asin())
+print(Decimal("1").acos())
+print(Decimal("-1").acos())
+print(Decimal(".5").asin())
