@@ -3112,7 +3112,7 @@ class Decimal(object):
         return ans
 
     def logb(self, context=None):
-        """ Returns the exponent of the magnitude of self's MSD.
+        """Returns the exponent of the magnitude of self's MSD.
 
         The result is the integer which is the exponent of the magnitude
         of the most significant digit of self (as though it were truncated
@@ -3324,8 +3324,8 @@ def _dec_from_triple(sign, coefficient, exponent, special=False):
 class _ContextManager(object):
     """Context manager class to support localcontext().
 
-      Sets a copy of the supplied context in __enter__() and restores
-      the previous decimal context in __exit__()
+    Sets a copy of the supplied context in __enter__() and restores
+    the previous decimal context in __exit__()
     """
 
     def __init__(self, new_context):
@@ -4202,7 +4202,7 @@ class Context(object):
         return a.log10(context=self)
 
     def logb(self, a):
-        """ Returns the exponent of the magnitude of the operand's MSD.
+        """Returns the exponent of the magnitude of the operand's MSD.
 
         The result is the integer which is the exponent of the magnitude
         of the most significant digit of the operand (as though the
@@ -4902,7 +4902,7 @@ _nbits = int.bit_length
 
 
 def _decimal_lshift_exact(n, e):
-    """ Given integers n and e, return n * 10**e if it's an integer, else None.
+    """Given integers n and e, return n * 10**e if it's an integer, else None.
 
     The computation is designed to avoid computing large powers of 10
     unnecessarily.
@@ -5348,7 +5348,12 @@ BasicContext = Context(
     flags=[],
 )
 
-ExtendedContext = Context(prec=9, rounding=ROUND_HALF_EVEN, traps=[], flags=[],)
+ExtendedContext = Context(
+    prec=9,
+    rounding=ROUND_HALF_EVEN,
+    traps=[],
+    flags=[],
+)
 
 
 ##### crud for parsing strings #############################################

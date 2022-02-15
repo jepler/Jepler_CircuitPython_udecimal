@@ -4,7 +4,7 @@
 
 repos:
 -   repo: https://github.com/python/black
-    rev: 19.10b0
+    rev: 20.8b1
     hooks:
     - id: black
 -   repo: https://github.com/fsfe/reuse-tool
@@ -18,15 +18,23 @@ repos:
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
 -   repo: https://github.com/pycqa/pylint
-    rev: pylint-2.6.0
+    rev: pylint-2.7.1
     hooks:
     -   id: pylint
-        name: lint (examples)
+        name: pylint (library code)
         types: [python]
-        files: ^examples/
-        args:
-        - --disable=missing-docstring,invalid-name,bad-whitespace
-    -   id: pylint
-        name: lint (code)
-        types: [python]
-        exclude: "^(docs/|examples/|setup.py$)"
+        exclude: "^(docs/|examples/|tests/|setup.py$)"
+-   repo: local
+    hooks:
+    -   id: pylint_examples
+        name: pylint (examples code)
+        description: Run pylint rules on "examples/*.py" files
+        entry: /usr/bin/env bash -c
+        args: ['([[ ! -d "examples" ]] || for example in $(find . -path "./examples/*.py"); do pylint --disable=missing-docstring,invalid-name,consider-using-f-string $example; done)']
+        language: system
+    -   id: pylint_tests
+        name: pylint (tests code)
+        description: Run pylint rules on "tests/*.py" files
+        entry: /usr/bin/env bash -c
+        args: ['([[ ! -d "tests" ]] || for test in $(find . -path "./tests/*.py"); do pylint --disable=missing-docstring $test; done)']
+        language: system
