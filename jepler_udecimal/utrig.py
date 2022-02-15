@@ -225,14 +225,14 @@ def acos(x, context=None):
     with localcontext(context) as ctx:
         ctx.prec += 2
         if x == 1:
-            r = Decimal(0). # 0 radians
+            r = Decimal(0)  # 0 radians
         elif x == -1:
             r = Decimal(1).atan() * 4  # pi radians
         else:
             r = atan((1 - x * x).sqrt() / x)
         if r < 0:
             r += 4 * atan(1)
-        return r / 1
+    return r / 1
 
 
 for name in __all__:
