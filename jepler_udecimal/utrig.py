@@ -34,7 +34,7 @@ Here are some examples of using utrig:
 >>> Decimal('.7').atan()
 Decimal('0.6107259643892086165437588765')
 >>> Decimal('.1').acos()
-Decimal('1.47062890563333682288579851219')
+Decimal('1.470628905633336822885798512')
 >>> Decimal('-.1').asin()
 Decimal('-0.1001674211615597963455231795')
 >>> Decimal('.4').tan()
@@ -202,7 +202,7 @@ def asin(x, context=None):
         if x == 1:
             r = pi / 2  # pi * 1/2 radians
         elif x == -1:
-            r = pi * 3 / 2  # pi * 3/2 radians
+            r = pi * 3 / 2  # pi * -1/2 radians
         else:
             r = atan(x / (1 - x * x).sqrt())
     return r / 1
