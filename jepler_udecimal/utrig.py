@@ -202,7 +202,7 @@ def asin(x, context=None):
         if x == 1:
             r = pi / 2  # pi * 1/2 radians
         elif x == -1:
-            r = pi * 3 / 2  # pi * -1/2 radians
+            r = pi / -2  # pi * -1/2 radians
         else:
             r = atan(x / (1 - x * x).sqrt())
     return r / 1
