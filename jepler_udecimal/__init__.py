@@ -169,7 +169,6 @@ if sys.implementation.name == "circuitpython":
         else:
             return m, (1 << (-e))
 
-
 else:
     _as_integer_ratio = float.as_integer_ratio
 
@@ -739,7 +738,7 @@ class Decimal(object):
                 sign = 1
             n, d = _as_integer_ratio(abs(f))
             k = d.bit_length() - 1
-            coeff = str(n * 5 ** k)
+            coeff = str(n * 5**k)
         else:
             raise TypeError("argument must be int or float.")
 
@@ -1349,9 +1348,9 @@ class Decimal(object):
             op1 = _WorkRep(self)
             op2 = _WorkRep(other)
             if shift >= 0:
-                coeff, remainder = divmod(op1.int * 10 ** shift, op2.int)
+                coeff, remainder = divmod(op1.int * 10**shift, op2.int)
             else:
-                coeff, remainder = divmod(op1.int, op2.int * 10 ** -shift)
+                coeff, remainder = divmod(op1.int, op2.int * 10**-shift)
             if remainder:
                 # result is not exact; adjust to ensure correct rounding
                 if coeff % 5 == 0:
@@ -1392,7 +1391,7 @@ class Decimal(object):
             else:
                 op2.int *= 10 ** (op2.exp - op1.exp)
             q, r = divmod(op1.int, op2.int)
-            if q < 10 ** context.prec:
+            if q < 10**context.prec:
                 return (
                     _dec_from_triple(sign, str(q), 0),
                     _dec_from_triple(self._sign, str(r), ideal_exp),
@@ -1552,7 +1551,7 @@ class Decimal(object):
             r -= op2.int
             q += 1
 
-        if q >= 10 ** context.prec:
+        if q >= 10**context.prec:
             return context._raise_error(DivisionImpossible)
 
         # result has same sign as self unless r is negative
@@ -1619,7 +1618,7 @@ class Decimal(object):
                 raise OverflowError("Cannot convert infinity to integer")
         s = (-1) ** self._sign
         if self._exp >= 0:
-            return s * int(self._int) * 10 ** self._exp
+            return s * int(self._int) * 10**self._exp
         else:
             return s * int(self._int[: self._exp] or "0")
 
@@ -1981,7 +1980,7 @@ class Decimal(object):
                 ye += 1
             if ye < 0:
                 return None
-            exponent = xe * 10 ** ye
+            exponent = xe * 10**ye
             if y.sign == 1:
                 exponent = -exponent
             # if other is a nonnegative integer, use ideal exponent
@@ -2040,13 +2039,13 @@ class Decimal(object):
 
                 if e > emax:
                     return None
-                xc = 5 ** e
+                xc = 5**e
 
             elif last_digit == 5:
                 # e >= log_5(xc) if xc is a power of 5; we have
                 # equality all the way up to xc=5**2658
                 e = _nbits(xc) * 28 // 65
-                xc, remainder = divmod(5 ** e, xc)
+                xc, remainder = divmod(5**e, xc)
                 if remainder:
                     return None
                 while xc % 5 == 0:
@@ -2067,18 +2066,18 @@ class Decimal(object):
 
                 if e > emax:
                     return None
-                xc = 2 ** e
+                xc = 2**e
             else:
                 return None
 
-            if xc >= 10 ** p:
+            if xc >= 10**p:
                 return None
             xe = -e - xe
             return _dec_from_triple(0, str(xc), xe)
 
         # now y is positive; find m and n such that y = m/n
         if ye >= 0:
-            m, n = yc * 10 ** ye, 1
+            m, n = yc * 10**ye, 1
         else:
             if xe != 0 and len(str(abs(yc * xe))) <= -ye:
                 return None
@@ -2122,9 +2121,9 @@ class Decimal(object):
         # 10**p and the result is not representable.
         if xc > 1 and m > p * 100 // _log10_lb(xc):
             return None
-        xc = xc ** m
+        xc = xc**m
         xe *= m
-        if xc > 10 ** p:
+        if xc > 10**p:
             return None
 
         # by this point the result *is* exactly representable
@@ -2569,15 +2568,15 @@ class Decimal(object):
         # rescale so that c has exactly prec base 100 'digits'
         shift = prec - l
         if shift >= 0:
-            c *= 100 ** shift
+            c *= 100**shift
             exact = True
         else:
-            c, remainder = divmod(c, 100 ** -shift)
+            c, remainder = divmod(c, 100**-shift)
             exact = not remainder
         e -= shift
 
         # find n = floor(sqrt(c)) using Newton's method
-        n = 10 ** prec
+        n = 10**prec
         while True:
             q = c // n
             if n <= q:
@@ -2590,9 +2589,9 @@ class Decimal(object):
             # result is exact; rescale to use ideal exponent e
             if shift >= 0:
                 # assert n % 10**shift == 0
-                n //= 10 ** shift
+                n //= 10**shift
             else:
-                n *= 10 ** -shift
+                n *= 10**-shift
             e += shift
         else:
             # result is not exact; fix last digit as described above
@@ -2812,7 +2811,7 @@ class Decimal(object):
         return s.compare_total(o)
 
     def copy_abs(self):
-        """Returns a copy with the sign set to 0. """
+        """Returns a copy with the sign set to 0."""
         return _dec_from_triple(0, self._int, self._exp, self._is_special)
 
     def copy_negate(self):
@@ -2976,11 +2975,11 @@ class Decimal(object):
         c, e = op.int, op.exp
         if adj == 0:
             # 1 < self < 10
-            num = str(c - 10 ** -e)
+            num = str(c - 10**-e)
             den = str(c)
             return len(num) - len(den) - (num < den)
         # adj == -1, 0.1 <= self < 1
-        return e + len(str(10 ** -e - c)) - 1
+        return e + len(str(10**-e - c)) - 1
 
     def ln(self, context=None):
         """Returns the natural (base e) logarithm of self."""
@@ -3054,11 +3053,11 @@ class Decimal(object):
         c, e = op.int, op.exp
         if adj == 0:
             # 1 < self < 10
-            num = str(c - 10 ** -e)
+            num = str(c - 10**-e)
             den = str(231 * c)
             return len(num) - len(den) - (num < den) + 2
         # adj == -1, 0.1 <= self < 1
-        num = str(10 ** -e - c)
+        num = str(10**-e - c)
         return len(num) + e - (num < "231") - 1
 
     def log10(self, context=None):
@@ -3112,7 +3111,7 @@ class Decimal(object):
         return ans
 
     def logb(self, context=None):
-        """ Returns the exponent of the magnitude of self's MSD.
+        """Returns the exponent of the magnitude of self's MSD.
 
         The result is the integer which is the exponent of the magnitude
         of the most significant digit of self (as though it were truncated
@@ -3324,8 +3323,8 @@ def _dec_from_triple(sign, coefficient, exponent, special=False):
 class _ContextManager(object):
     """Context manager class to support localcontext().
 
-      Sets a copy of the supplied context in __enter__() and restores
-      the previous decimal context in __exit__()
+    Sets a copy of the supplied context in __enter__() and restores
+    the previous decimal context in __exit__()
     """
 
     def __init__(self, new_context):
@@ -4202,7 +4201,7 @@ class Context(object):
         return a.log10(context=self)
 
     def logb(self, a):
-        """ Returns the exponent of the magnitude of the operand's MSD.
+        """Returns the exponent of the magnitude of the operand's MSD.
 
         The result is the integer which is the exponent of the magnitude
         of the most significant digit of the operand (as though the
@@ -4902,7 +4901,7 @@ _nbits = int.bit_length
 
 
 def _decimal_lshift_exact(n, e):
-    """ Given integers n and e, return n * 10**e if it's an integer, else None.
+    """Given integers n and e, return n * 10**e if it's an integer, else None.
 
     The computation is designed to avoid computing large powers of 10
     unnecessarily.
@@ -4915,12 +4914,12 @@ def _decimal_lshift_exact(n, e):
     if n == 0:
         return 0
     elif e >= 0:
-        return n * 10 ** e
+        return n * 10**e
     else:
         # val_n = largest power of 10 dividing n.
         str_n = str(abs(n))
         val_n = len(str_n) - len(str_n.rstrip("0"))
-        return None if val_n < -e else n // 10 ** -e
+        return None if val_n < -e else n // 10**-e
 
 
 def _sqrt_nearest(n, a):
@@ -5023,12 +5022,12 @@ def _dlog10(c, e, p):
     f = e + l - (e + l >= 1)
 
     if p > 0:
-        M = 10 ** p
+        M = 10**p
         k = e + p - f
         if k >= 0:
-            c *= 10 ** k
+            c *= 10**k
         else:
-            c = _div_nearest(c, 10 ** -k)
+            c = _div_nearest(c, 10**-k)
 
         log_d = _ilog(c, M)  # error < 5 + 22 = 27
         log_10 = _log10_digits(p)  # error < 1
@@ -5036,7 +5035,7 @@ def _dlog10(c, e, p):
         log_tenpower = f * M  # exact
     else:
         log_d = 0  # error < 2.31
-        log_tenpower = _div_nearest(f, 10 ** -p)  # error < 0.5
+        log_tenpower = _div_nearest(f, 10**-p)  # error < 0.5
 
     return _div_nearest(log_tenpower + log_d, 100)
 
@@ -5060,12 +5059,12 @@ def _dlog(c, e, p):
     if p > 0:
         k = e + p - f
         if k >= 0:
-            c *= 10 ** k
+            c *= 10**k
         else:
-            c = _div_nearest(c, 10 ** -k)  # error of <= 0.5 in c
+            c = _div_nearest(c, 10**-k)  # error of <= 0.5 in c
 
         # _ilog magnifies existing error in c by a factor of at most 10
-        log_d = _ilog(c, 10 ** p)  # error < 5 + 22 = 27
+        log_d = _ilog(c, 10**p)  # error < 5 + 22 = 27
     else:
         # p <= 0: just approximate the whole thing by 0; error < 2.31
         log_d = 0
@@ -5076,7 +5075,7 @@ def _dlog(c, e, p):
         if p + extra >= 0:
             # error in f * _log10_digits(p+extra) < |f| * 1 = |f|
             # after division, error < |f|/10**extra + 0.5 < 10 + 0.5 < 11
-            f_log_ten = _div_nearest(f * _log10_digits(p + extra), 10 ** extra)
+            f_log_ten = _div_nearest(f * _log10_digits(p + extra), 10**extra)
         else:
             f_log_ten = 0
     else:
@@ -5189,16 +5188,16 @@ def _dexp(c, e, p):
     # rounding down
     shift = e + q
     if shift >= 0:
-        cshift = c * 10 ** shift
+        cshift = c * 10**shift
     else:
-        cshift = c // 10 ** -shift
+        cshift = c // 10**-shift
     quot, rem = divmod(cshift, _log10_digits(q))
 
     # reduce remainder back to original precision
-    rem = _div_nearest(rem, 10 ** extra)
+    rem = _div_nearest(rem, 10**extra)
 
     # error in result of _iexp < 120;  error after division < 0.62
-    return _div_nearest(_iexp(rem, 10 ** p), 1000), quot - p + 3
+    return _div_nearest(_iexp(rem, 10**p), 1000), quot - p + 3
 
 
 def _dpower(xc, xe, yc, ye, p):
@@ -5225,9 +5224,9 @@ def _dpower(xc, xe, yc, ye, p):
     # compute product y*log(x) = yc*lxc*10**(-p-b-1+ye) = pc*10**(-p-1)
     shift = ye - b
     if shift >= 0:
-        pc = lxc * yc * 10 ** shift
+        pc = lxc * yc * 10**shift
     else:
-        pc = _div_nearest(lxc * yc, 10 ** -shift)
+        pc = _div_nearest(lxc * yc, 10**-shift)
 
     if pc == 0:
         # we prefer a result that isn't exactly 1; this makes it
@@ -5235,7 +5234,7 @@ def _dpower(xc, xe, yc, ye, p):
         if (len(str(xc)) + xe >= 1) == (yc > 0):  # if x**y > 1:
             coeff, exp = 10 ** (p - 1) + 1, 1 - p
         else:
-            coeff, exp = 10 ** p - 1, -p
+            coeff, exp = 10**p - 1, -p
     else:
         coeff, exp = _dexp(pc, -(p + 1), p + 1)
         coeff = _div_nearest(coeff, 10)
@@ -5348,7 +5347,12 @@ BasicContext = Context(
     flags=[],
 )
 
-ExtendedContext = Context(prec=9, rounding=ROUND_HALF_EVEN, traps=[], flags=[],)
+ExtendedContext = Context(
+    prec=9,
+    rounding=ROUND_HALF_EVEN,
+    traps=[],
+    flags=[],
+)
 
 
 ##### crud for parsing strings #############################################
