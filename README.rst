@@ -17,6 +17,10 @@ Introduction
     :target: https://github.com/psf/black
     :alt: Code Style: Black
 
+.. image:: https://results.pre-commit.ci/badge/github/jepler/Jepler_CircuitPython_udecimal/main.svg
+   :target: https://results.pre-commit.ci/latest/github/jepler/Jepler_CircuitPython_udecimal/main
+   :alt: pre-commit.ci status
+
 Reduced version of the decimal library for CircuitPython
 
 
