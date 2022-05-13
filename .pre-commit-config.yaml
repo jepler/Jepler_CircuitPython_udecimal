@@ -30,3 +30,17 @@ repos:
         name: lint (code)
         types: [python]
         exclude: "^(docs/|examples/|setup.py$)"
+- repo: local
+  hooks:
+    - id: mypy
+      name: mypy
+      entry: "mypy --no-warn-unused-ignores jepler_udecimal"
+      language: python
+      additional_dependencies: ["mypy==0.910"]
+      types: [python]
+      # use require_serial so that script
+      # is only called once per commit
+      require_serial: true
+      # Print the number of files as a sanity-check
+      verbose: true
+      pass_filenames: false
