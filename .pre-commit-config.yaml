@@ -3,22 +3,22 @@
 # SPDX-License-Identifier: Unlicense
 
 repos:
--   repo: https://github.com/python/black
+-   repo: https://github.com/psf/black
     rev: 22.3.0
     hooks:
     - id: black
 -   repo: https://github.com/fsfe/reuse-tool
-    rev: v0.12.1
+    rev: v1.0.0
     hooks:
     - id: reuse
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v4.2.0
     hooks:
     -   id: check-yaml
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
 -   repo: https://github.com/pycqa/pylint
-    rev: v2.12.2
+    rev: v2.13.9
     hooks:
     -   id: pylint
         name: lint (examples)

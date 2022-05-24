@@ -13,7 +13,7 @@
 # Adapted to CircuitPython by Jeff Epler <jepler@gmail.com>
 #
 # pylint: disable=line-too-long,superfluous-parens,too-many-lines,redefined-builtin,bare-except
-# pylint: disable=protected-access,invalid-name,no-self-use,self-cls-assignment,no-else-return,no-else-raise,too-many-public-methods,useless-object-inheritance,invalid-unary-operand-type,unused-argument,too-many-branches,too-many-return-statements,no-else-break,unused-variable,arguments-differ,missing-function-docstring,inconsistent-return-statements,global-statement,too-many-statements,attribute-defined-outside-init,consider-using-in,dangerous-default-value,using-constant-test,too-many-locals,too-many-arguments,keyword-arg-before-vararg
+# pylint: disable=protected-access,invalid-name,self-cls-assignment,no-else-return,no-else-raise,too-many-public-methods,useless-object-inheritance,invalid-unary-operand-type,unused-argument,too-many-branches,too-many-return-statements,no-else-break,unused-variable,arguments-differ,missing-function-docstring,inconsistent-return-statements,global-statement,too-many-statements,attribute-defined-outside-init,consider-using-in,dangerous-default-value,using-constant-test,too-many-locals,too-many-arguments,keyword-arg-before-vararg
 """
 Reduced version of the decimal library for CircuitPython.  It runs on
 CircuitPython as well as standard Python, though you should probably
@@ -141,7 +141,10 @@ try:
 
     DecimalTuple = _namedtuple("DecimalTuple", "sign digits exponent")
 except ImportError:
-    DecimalTuple = lambda *args: args  # type: ignore
+
+    def DecimalTuple(*args):  # type: ignore
+        return args
+
 
 # Rounding
 ROUND_DOWN = "ROUND_DOWN"
@@ -154,7 +157,7 @@ ROUND_HALF_DOWN = "ROUND_HALF_DOWN"
 ROUND_05UP = "ROUND_05UP"
 
 try:
-    NotImplemented
+    NotImplemented  # pylint: disable=used-before-assignment
 except NameError:
     NotImplemented = object()
 
@@ -691,7 +694,7 @@ class Decimal(object):
                 context = getcontext()
             context._raise_error(
                 FloatOperation,
-                "strict semantics for mixing floats and Decimals are " "enabled",
+                "strict semantics for mixing floats and Decimals are enabled",
             )
             value = Decimal.from_float(value)
             self._exp = value._exp
@@ -3612,7 +3615,7 @@ class Context(object):
         if isinstance(num, str) and (num != num.strip() or "_" in num):
             return self._raise_error(
                 ConversionSyntax,
-                "trailing or leading whitespace and " "underscores are not permitted.",
+                "trailing or leading whitespace and underscores are not permitted.",
             )
 
         d = Decimal(num, context=self)
