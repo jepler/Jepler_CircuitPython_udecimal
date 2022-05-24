@@ -142,7 +142,7 @@ try:
     DecimalTuple = _namedtuple("DecimalTuple", "sign digits exponent")
 except ImportError:
 
-    def DecimalTuple(*args):
+    def DecimalTuple(*args):  # type: ignore
         return args
 
 
@@ -3577,7 +3577,7 @@ class Context(object):
             self._ignored_flags.remove(flag)
 
     # We inherit object.__hash__, so we must deny this explicitly
-    __hash__ = None
+    __hash__ = None  # type: ignore
 
     def Etiny(self):
         """Returns Etiny (= Emin - prec + 1)"""
@@ -5375,7 +5375,7 @@ ExtendedContext = Context(
 try:
     import re
 except:
-    import ure as re
+    import ure as re  # type: ignore
 
 _parser = re.compile(  # A numeric string consists of:
     r"([-+])?"  # an optional sign, followed by either...    # 1
