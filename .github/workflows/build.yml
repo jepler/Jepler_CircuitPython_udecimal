@@ -13,7 +13,7 @@ jobs:
     - name: View context attributes
       uses: actions/github-script@v6
       with:
-        script: console.log(JSON.stringify(context))
+        script: console.log(JSON.stringify(context, null, 2))
     - name: Translate Repo Name For Build Tools filename_prefix
       id: repo-name
       run: |
