@@ -269,6 +269,10 @@ class DivisionByZero(DecimalException):
     The result of the operation is [sign,inf], where sign is the exclusive
     or of the signs of the operands for divide, or is 1 for an odd power of
     -0, for power.
+
+    Due to technical limitations in MicroPython, this exception does not
+    inherit from ZeroDivisionError, an incompatibility with standard Python's
+    Decimal library.
     """
 
     def handle(self, context, sign, *args):
@@ -425,6 +429,10 @@ class FloatOperation(DecimalException):
 
     Otherwise (the signal is trapped), only equality comparisons and explicit
     conversions are silent. All other mixed operations raise FloatOperation.
+
+    Due to technical limitations in MicroPython, this exception does not
+    inherit from TypeError, an incompatibility with standard Python's
+    Decimal library.
     """
 
 
