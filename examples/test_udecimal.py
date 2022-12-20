@@ -50,19 +50,19 @@ with localcontext():
     print(neginf * inf)
     try:
         print(dig / 0)
-    except Exception as e:
+    except ZeroDivisionError as e:
         print("Division by zero")
     getcontext().traps[DivisionByZero] = 1
     try:
         print(dig / 0)
-    except Exception as e:
+    except DivisionByZero as e:
         print("Division by zero")
     c = Context()
-    c.traps[InvalidOperation] = 0
     print(+c.flags[InvalidOperation])
+    c.traps[InvalidOperation] = 0
     try:
         c.divide(Decimal(0), Decimal(0))
-    except Exception as e:
+    except ZeroDivisionError as e:
         print("Division by zero")
     c.traps[InvalidOperation] = 1
     print(+c.flags[InvalidOperation])
@@ -70,17 +70,18 @@ with localcontext():
     print(+c.flags[InvalidOperation])
     try:
         print(c.divide(Decimal(0), Decimal(0)))
-    except Exception as e:
-        print("Division by zero")
+    except InvalidOperation as e:
+        print("InvalidOperation")
     print(+c.flags[InvalidOperation])
     try:
         print(c.divide(Decimal(0), Decimal(0)))
-    except Exception as e:
-        print("Division by zero")
+    except InvalidOperation as e:
+        print("InvalidOperation")
     print(+c.flags[InvalidOperation])
 
 import jepler_udecimal.utrig
 from jepler_udecimal import Decimal
+from jepler_udecimal import InvalidOperation
 
 print(Decimal(".7").atan())
 print(Decimal(".1").acos())
@@ -96,12 +97,12 @@ print(Decimal("NaN").tan())
 print(Decimal("NaN").sin())
 try:
     print(Decimal("2").acos())
-except Exception as e:
-    print("exception")
+except InvalidOperation as e:
+    print("InvalidOperation")
 try:
     print(Decimal("2").asin())
-except Exception as e:
-    print("exception")
+except InvalidOperation as e:
+    print("InvalidOperation")
 print(Decimal("2").atan())
 print(Decimal("1").asin())
 print(Decimal("-1").asin())
