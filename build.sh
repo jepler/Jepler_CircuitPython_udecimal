@@ -9,17 +9,12 @@ echo "=== Create and set up virtual environment"
 . .env/bin/activate
 echo "=== Install requirements"
 pip3 install wheel
-pip3 install -r requirements.txt
+pip3 install -r requirements_dev.txt
 echo "=== Run pre-commit"
 pre-commit run --all-files
-echo "=== Run pylint"
-pylint jepler_udecimal
-if [ -d examples ]; then
-    pylint --disable=missing-docstring,invalid-name,bad-whitespace examples
-fi
 
 echo "=== Clone and build circuitpython unix port"
-[ -e circuitpython/py/py.mk ] || git clone --depth=1 https://github.com/adafruit/circuitpython
+[ -e circuitpython/py/py.mk ] || git clone --shallow-since=2021-07-01 https://github.com/adafruit/circuitpython
 [ -e circuitpython/lib/libffi/autogen.sh ] || (cd circuitpython && git submodule update --init lib/libffi lib/axtls lib/berkeley-db-1.xx tools/huffman lib/uzlib extmod/ulab)
 [ -x circuitpython/ports/unix/micropython ] || (
 make -C circuitpython/mpy-cross -j$(nproc)
@@ -30,12 +25,14 @@ make -C circuitpython/ports/unix -j$(nproc) DEBUG=1 STRIP=:
 echo "=== Run tests"
 python -m jepler_udecimal.test
 
-if ! env MICROPYPATH=. PYTHONPATH=. MICROPY_MICROPYTHON=circuitpython/ports/unix/micropython circuitpython/tests/run-tests -d examples; then
-    for exp in *.exp; do
-        testbase=$(basename $exp .exp);
-        echo -e "\nFAILURE $testbase";
-        diff -u $testbase.exp $testbase.out;
-    done
+run-tests () {
+    env MICROPYPATH=. PYTHONPATH=. MICROPY_MICROPYTHON=circuitpython/ports/unix/micropython circuitpython/tests/run-tests.py "$@"
+}
+
+run-tests --clean-failures
+if ! run-tests -d examples; then
+    run-tests --print-failures
+    exit 1
 fi
 
 PYTHONPATH=. python examples/test_udecimal.py > test_udecimal.exp
