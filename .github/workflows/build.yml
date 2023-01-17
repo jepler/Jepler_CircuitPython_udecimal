@@ -42,55 +42,18 @@ jobs:
       # (e.g. - apt-get: gettext, etc; pip: circuitpython-build-tools, requirements.txt; etc.)
       run: |
         source actions-ci/install.sh
-    - name: Pip install Sphinx, pre-commit
-      run: |
-        pip install --force-reinstall Sphinx sphinx-rtd-theme pre-commit sphinx-autoapi
     - name: Library version
       run: git describe --dirty --always --tags
-    - name: Setup problem matchers
-      uses: adafruit/circuitpython-action-library-ci-problem-matchers@v1
-    - name: Pre-commit hooks
+    - name: Perform build & test
       run: |
-        pre-commit run --all-files
-    - name: Clone and build circuitpython unix port
-      run: |
-        set -e
-        [ -e circuitpython/py/py.mk ] || (git clone --depth=1 https://github.com/adafruit/circuitpython && cd circuitpython && git fetch --tags --recurse-submodules=no --shallow-since="2021-07-01" https://github.com/adafruit/circuitpython HEAD)
-        [ -e circuitpython/lib/libffi/autogen.sh ] || (cd circuitpython && git submodule update --init lib/libffi lib/axtls lib/berkeley-db-1.xx tools/huffman lib/uzlib extmod/ulab)
-        [ -x circuitpython/ports/unix/micropython ] || (
-            make -C circuitpython/mpy-cross -j$(nproc)
-            make -C circuitpython/ports/unix -j$(nproc) deplibs
-            make -C circuitpython/ports/unix -j$(nproc) DEBUG=1 STRIP=:
-        )
-    - name: Unit Test
-      run: |
-        python -m jepler_udecimal.test
-        if ! env MICROPYPATH=. PYTHONPATH=. MICROPY_MICROPYTHON=circuitpython/ports/unix/micropython circuitpython/tests/run-tests.py -d examples; then
-            for exp in *.exp; do
-                testbase=$(basename $exp .exp);
-                echo -e "\nFAILURE $testbase";
-                diff -u $testbase.exp $testbase.out;
-            done
-            exit 1
-        fi
-    - name: Build assets
-      run: circuitpython-build-bundles --package_folder_prefix jepler --filename_prefix ${{ steps.repo-name.outputs.repo-name }} --library_location .
-    - name: Build docs
-      working-directory: docs
-      run: sphinx-build -E -W -b html . _build/html
+        ./build.sh
     - name: Archive bundles
       uses: actions/upload-artifact@v2
       with:
         name: bundles
         path: ${{ github.workspace }}/bundles/
-    - name: Check For setup.py
-      id: need-pypi
-      run: |
-        echo ::set-output name=setup-py::$( find . -wholename './setup.py' )
-    - name: Build Python package
-      if: contains(steps.need-pypi.outputs.setup-py, 'setup.py')
-      run: |
-        pip install --upgrade setuptools wheel twine readme_renderer testresources
-        python setup.py sdist
-        python setup.py bdist_wheel --universal
-        twine check dist/*
+    - name: Archive docs
+      uses: actions/upload-artifact@v2
+      with:
+        name: docs
+        path: ${{ github.workspace }}/_build/html
