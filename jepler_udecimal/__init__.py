@@ -1798,16 +1798,16 @@ class Decimal(object):
         else:
             return -self._round_down(prec)
 
-    _pick_rounding_function = dict(
-        ROUND_DOWN=_round_down,
-        ROUND_UP=_round_up,
-        ROUND_HALF_UP=_round_half_up,
-        ROUND_HALF_DOWN=_round_half_down,
-        ROUND_HALF_EVEN=_round_half_even,
-        ROUND_CEILING=_round_ceiling,
-        ROUND_FLOOR=_round_floor,
-        ROUND_05UP=_round_05up,
-    )
+    _pick_rounding_function = {
+        ROUND_DOWN: _round_down,
+        ROUND_UP: _round_up,
+        ROUND_HALF_UP: _round_half_up,
+        ROUND_HALF_DOWN: _round_half_down,
+        ROUND_HALF_EVEN: _round_half_even,
+        ROUND_CEILING: _round_ceiling,
+        ROUND_FLOOR: _round_floor,
+        ROUND_05UP: _round_05up,
+    }
 
     def __round__(self, n=None):
         """Round self to the nearest integer, or to a given precision.
