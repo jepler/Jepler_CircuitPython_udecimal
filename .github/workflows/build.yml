@@ -8,52 +8,9 @@ on: [pull_request, push]
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-    - name: View context attributes
-      uses: actions/github-script@v6
+    - name: Run Build CI workflow
+      uses: adafruit/workflows-circuitpython-libs/build@main
       with:
-        script: console.log(JSON.stringify(context, null, 2))
-    - name: Translate Repo Name For Build Tools filename_prefix
-      id: repo-name
-      run: |
-        echo ::set-output name=repo-name::$(
-        echo ${{ github.repository }} |
-        awk -F '\/' '{ print tolower($2) }' |
-        tr '_' '-'
-        )
-    - name: Set up Python 3.x
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.x
-    - name: Versions
-      run: |
-        python3 --version
-    - name: Checkout Current Repo
-      uses: actions/checkout@v1
-      with:
-        submodules: true
-    - name: Checkout tools repo
-      uses: actions/checkout@v2
-      with:
-        repository: adafruit/actions-ci-circuitpython-libs
-        path: actions-ci
-    - name: Install dependencies
-      # (e.g. - apt-get: gettext, etc; pip: circuitpython-build-tools, requirements.txt; etc.)
-      run: |
-        source actions-ci/install.sh
-    - name: Library version
-      run: git describe --dirty --always --tags
-    - name: Perform build & test
-      run: |
-        ./build.sh
-    - name: Archive bundles
-      uses: actions/upload-artifact@v2
-      with:
-        name: bundles
-        path: ${{ github.workspace }}/bundles/
-    - name: Archive docs
-      uses: actions/upload-artifact@v2
-      with:
-        name: docs
-        path: ${{ github.workspace }}/_build/html
+        package-prefix: jepler_udecimal
