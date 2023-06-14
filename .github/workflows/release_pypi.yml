@@ -15,5 +15,5 @@ jobs:
     - name: Run PyPI Release CI workflow
       uses: adafruit/workflows-circuitpython-libs/release-pypi@main
       with:
-        pypi-username: ${{ secrets.pypi_username }}
-        pypi-password: ${{ secrets.pypi_password }}
+        pypi-username: __token__
+        pypi-password: ${{ secrets.pypi_token }}
