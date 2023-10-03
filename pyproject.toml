@@ -5,4 +5,4 @@
 [tool.black]
 target-version = ['py35']
 [tool.setuptools]
-packages=jepler_udecimal
+packages=['jepler_udecimal']
