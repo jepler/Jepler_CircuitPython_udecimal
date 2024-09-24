@@ -25,7 +25,7 @@ repos:
         types: [python]
         files: ^examples/
         args:
-        - --disable=missing-docstring,invalid-name,bad-whitespace
+        - --disable=missing-docstring,invalid-name
     -   id: pylint
         name: lint (code)
         types: [python]

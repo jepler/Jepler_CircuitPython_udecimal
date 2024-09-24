@@ -8,7 +8,9 @@
 from jepler_udecimal import Decimal
 
 
-def moneyfmt(value, places=2, curr="", sep=",", dp=".", pos="", neg="-", trailneg=""):
+def moneyfmt(
+    value, *, places=2, curr="", sep=",", dp=".", pos="", neg="-", trailneg=""
+):
     """Convert Decimal to a money formatted string.
 
     places:  required number of places after the decimal point
