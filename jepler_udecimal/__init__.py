@@ -3357,7 +3357,7 @@ class Context(object):
     :param bool clamp: If true, change exponents if too high
     """
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-positional-arguments
         self,
         prec=None,
         rounding=None,
