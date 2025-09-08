@@ -8,17 +8,17 @@ repos:
     hooks:
     - id: black
 -   repo: https://github.com/fsfe/reuse-tool
-    rev: v5.0.2
+    rev: v5.1.1
     hooks:
     - id: reuse
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
     -   id: check-yaml
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
 -   repo: https://github.com/pycqa/pylint
-    rev: v3.3.4
+    rev: v3.3.8
     hooks:
     -   id: pylint
         name: lint (examples)
