@@ -6,16 +6,15 @@
 requires = [
     "setuptools",
     "wheel",
-    "setuptools-scm",
+    "setuptools_scm[toml]>=6.0",
 ]
 
 [project]
-name = "circuitpython-jepler-udecimal"
+name = "jepler-circuitpython-udecimal"
 description = "Reduced version of the decimal library for CircuitPython"
-version = "0.0.0+auto.0"
 readme = "README.rst"
 authors = [
-    {name = "Jeff Epler", email = "jepler@gmail.com"}
+    {name = "Jeff Epler", email = "jepler@unpythonic.net"}
 ]
 urls = { Source = "https://github.com/jepler/Jepler_CircuitPython_udecimal", Documentation = "https://jepler-udecimal.readthedocs.io/en/latest/api/jepler_udecimal/index.html", Tracker = "https://github.com/jepler/Jepler_CircuitPython_udecimal/issues" }
 #    "Pull Requests" = "https://github.com/jepler/Jepler_CircuitPython_udecimal/pulls",
@@ -30,17 +29,15 @@ keywords = [
     "arbitraryprecision",
     "math",
 ]
-license = {text = "MIT"}
+license = "MIT"
 classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Embedded Systems",
     "Topic :: System :: Hardware",
-    "License :: OSI Approved :: MIT License",
-    "License :: OSI Approved :: Python Software Foundation License",
     "Programming Language :: Python :: 3",
 ]
-dynamic = ["dependencies", "optional-dependencies"]
+dynamic = ["version", "dependencies", "optional-dependencies"]
 
 
 [tool.setuptools]
