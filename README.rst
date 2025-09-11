@@ -23,9 +23,15 @@ Introduction
 
 Reduced version of the decimal library for CircuitPython
 
+Important Note
+==============
+From version 1.0.9 through 1.0.12, this package was incorrectly published on pypi under the name
+`circuitpython-jepler-udecimal <https://pypi.org/project/circuitpython-jepler-udecimal/>`_.
+The correct package name is
+`jepler-circuitpython-udecimal <https://pypi.org/project/jepler-circuitpython-udecimal/>`_.
 
 Dependencies
-=============
+============
 This library depends on:
 
 * `Adafruit CircuitPython <https://github.com/adafruit/circuitpython>`_
